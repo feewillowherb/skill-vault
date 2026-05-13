@@ -1,0 +1,6 @@
+schemaVersion: 1
+type: coderef
+title: skill-vault
+docsRoot: docs
+reposRoot: repos
+...
