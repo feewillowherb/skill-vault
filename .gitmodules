@@ -1,3 +1,6 @@
 [submodule "repos/impeccable"]
 	path = repos/impeccable
 	url = https://github.com/pbakaus/impeccable.git
+[submodule "OpenSpec"]
+	path = OpenSpec
+	url = https://github.com/Fission-AI/OpenSpec.git
