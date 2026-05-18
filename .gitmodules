@@ -4,3 +4,6 @@
 [submodule "OpenSpec"]
 	path = OpenSpec
 	url = https://github.com/Fission-AI/OpenSpec.git
+[submodule "repos/bmad-method"]
+	path = repos/bmad-method
+	url = https://github.com/bmad-code-org/BMAD-METHOD.git
