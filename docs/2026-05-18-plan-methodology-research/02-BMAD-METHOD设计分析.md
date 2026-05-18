@@ -2,7 +2,7 @@
 
 ## 1. 概述
 
-BMAD-METHOD（Build More Architect Dreams）是一个 AI 驱动的结构化敏捷开发框架。与 Cursor Plan 的轻量级"即时规划"不同，BMAD-METHOD 提供了从产品构想到代码交付的**全生命周期**方法论。
+BMAD-METHOD（Build More Architect Dreams）是一个 AI 驱动的结构化敏捷开发框架，提供了从产品构想到代码交付的**全生命周期**方法论。
 
 **来源**: `repos/bmad-method`
 **当前版本**: v6
