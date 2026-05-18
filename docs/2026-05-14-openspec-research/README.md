@@ -194,9 +194,9 @@ class TraceManager {
 5. **[文件命名规范](04-文件分类和命名规范.md)** - 命名标准和最佳实践
 
 ### 参考资源
-- **OpenSpec 文档**: `/OpenSpec/docs/`
+- **OpenSpec 文档**: `repos/openspec/docs/`
 - **Impeccable 计划模板**: `/repos/impeccable/notes/plans/`
-- **需求解析器**: `/OpenSpec/test/core/parsers/requirement-blocks.test.ts`
+- **需求解析器**: `repos/openspec/test/core/parsers/requirement-blocks.test.ts`
 
 ## 🎯 下一步行动
 

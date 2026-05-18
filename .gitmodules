@@ -1,9 +1,9 @@
 [submodule "repos/impeccable"]
 	path = repos/impeccable
 	url = https://github.com/pbakaus/impeccable.git
-[submodule "OpenSpec"]
-	path = OpenSpec
-	url = https://github.com/Fission-AI/OpenSpec.git
 [submodule "repos/bmad-method"]
 	path = repos/bmad-method
 	url = https://github.com/bmad-code-org/BMAD-METHOD.git
+[submodule "repos/openspec"]
+	path = repos/openspec
+	url = https://github.com/Fission-AI/OpenSpec.git
