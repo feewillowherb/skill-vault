@@ -46,3 +46,15 @@ docs/2026-01-01-topic-name/
 - 文件夹名称由日期和提案名称组成，使用连字符分隔。
 - 文件夹内的文档按编号排序，编号从 `00` 开始。
 - 每个调研文件夹应包含一个 `00-调研总览.md` 作为入口索引。
+
+## Epic 规划：BMAD-METHOD + OpenSpec（在 Cursor 中）
+
+源码参考：`repos/bmad-method`、`repos/openspec`。完整结合方案见 `docs/2026-05-18-plan-methodology-research/`（入口 [00-调研总览.md](docs/2026-05-18-plan-methodology-research/00-调研总览.md)）。
+
+**分工**：
+
+- **BMAD**（业务项目内安装）：`npx bmad-method install --modules bmm --tools cursor` → skills 在 `.agents/skills/`。用于 Epic 规划、架构、拆成多份 `proposal.md` / 概要 `design.md`。**禁止**生成 `tasks.md` 或使用 Phase 4 实施工作流（`bmad-dev-story` 等）。
+- **用户**：将每个 BMAD slice 手工导入目标仓库的 OpenSpec change。
+- **OpenSpec**：`openspec init` 后使用 `/opsx:propose`、`/opsx:apply`；**`tasks.md` 仅由 OpenSpec 维护**。
+
+规划阶段可调用 `bmad-help`；需要 Cursor 操作说明时阅读 `docs/2026-05-18-plan-methodology-research/01-Cursor中使用BMAD-METHOD.md`。

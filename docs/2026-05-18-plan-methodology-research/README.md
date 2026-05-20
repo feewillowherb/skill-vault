@@ -1,53 +1,47 @@
-# Plan 方法论 — BMAD-METHOD 与 OpenSpec 工作流
+# Cursor + OpenSpec + BMAD-METHOD 方法论
 
-## 工作流概览
+Epic 级需求：**BMAD 规划与拆分 → 用户衔接 → OpenSpec 分 change 执行**。任务清单（`tasks.md`）仅由 OpenSpec 管理。
+
+## 工作流
 
 ```
-BMAD-METHOD ──生成──→ topic 文件夹 ──导入──→ OpenSpec
-                       ├── proposal.md        执行 propose/apply 流程
-                       └── design.md
+Cursor
+  ├─ BMAD skills (.agents/skills/)     →  PRD / 架构 / 多份 proposal + 概要 design
+  ├─ 用户手工衔接                        →  各 slice → 目标项目 openspec/changes/<id>/
+  └─ OpenSpec (/opsx:*)                 →  specs / design / tasks / apply / archive
 ```
-
-**三步流程**：
-
-1. **BMAD-METHOD 生成制品**: 使用 BMAD-METHOD 工具对 epic 级需求进行规划分析，输出 `proposal.md`（提案）和 `design.md`（概要设计）
-2. **存储到 topic 文件夹**: 将两个文件放入以 topic 命名的文件夹中（如本文件夹 `2026-05-18-plan-methodology-research`）
-3. **导入 OpenSpec**: 直接将 topic 导入 OpenSpec，执行 `/opsx:propose` → `/opsx:apply` 流程
-
-### 约定
-
-- **proposal.md**: 描述需求动机、变更范围和影响，作为 OpenSpec `/opsx:propose` 的输入
-- **design.md**: 概要级别的设计方案（不需要非常细节），作为 OpenSpec `/opsx:apply` 的参考
-- **文件夹命名**: 使用 topic 名称，如 `plan-methodology-research`
-- **OpenSpec 导入**: 直接导入 topic 文件夹即可启动 OpenSpec 工作流
 
 ## 文档索引
 
-### 调研材料
-
-| 文档 | 描述 |
+| 文档 | 说明 |
 |------|------|
-| [00-调研总览](./00-调研总览.md) | BMAD-METHOD 分析与工作流概述 |
-| [02-BMAD-METHOD设计分析](./02-BMAD-METHOD设计分析.md) | BMAD-METHOD 完整分析 |
+| [00-调研总览](./00-调研总览.md) | 入口、原则、导航 |
+| [01-Cursor 中使用 BMAD-METHOD](./01-Cursor中使用BMAD-METHOD.md) | **Cursor 安装与 skill 使用** |
+| [02-BMAD-METHOD 设计分析](./02-BMAD-METHOD设计分析.md) | BMAD 架构；Phase 4 在结合方案中跳过 |
+| [03-Cursor-OpenSpec-BMAD 结合方案](./03-Cursor-OpenSpec-BMAD结合方案.md) | **完整结合流程与制品约定** |
 
-### 工作流设计
+### 示例制品（BMAD → OpenSpec 草稿）
 
-| 文档 | 描述 |
+| 文件 | 角色 |
 |------|------|
-| [03-工作流设计](./03-方法论对比与融合.md) | BMAD → Topic → OpenSpec 工作流设计 |
+| [proposal.md](./proposal.md) | 单个 slice 的 proposal 草稿示例 |
+| [design.md](./design.md) | 概要 design，供 OpenSpec apply 参考（非 tasks） |
 
-### OpenSpec 制品
+## 快速命令
 
-| 文档 | 描述 | OpenSpec 对接 |
-|------|------|---------------|
-| [proposal.md](./proposal.md) | 提案 | `/opsx:propose` 输入 |
-| [design.md](./design.md) | 概要设计 | `/opsx:apply` 参考 |
+```bash
+# 业务项目根目录
+npx bmad-method install --modules bmm --tools cursor
+openspec init
+```
 
-## 参考来源
+Cursor 中：`bmad-help` → 规划与拆分 → 用户拷贝草稿 → `/opsx:propose` / `/opsx:apply`
 
-- BMAD-METHOD: `repos/bmad-method`
+## 参考仓库
+
+- `repos/bmad-method`
+- `repos/openspec`
 
 ---
 
-**文档版本**: 3.0
-**最后更新**: 2026-05-18
+**文档版本**: 4.0 · **最后更新**: 2026-05-20

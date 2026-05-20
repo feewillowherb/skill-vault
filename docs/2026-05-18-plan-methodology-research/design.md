@@ -1,72 +1,50 @@
 ## Context
 
-BMAD-METHOD 是一个成熟的全周期结构化规划框架，提供完整的 epic 级需求分析能力。当前缺少标准化的制品存储和下游对接方式：
+BMAD-METHOD 提供 epic 级规划与跨项目架构能力；OpenSpec 提供 change 级 specs 与 **tasks** 驱动的实现循环。二者需在 Cursor 中共存，且由用户手工衔接，避免双套任务体系冲突。
 
-- BMAD 产出丰富（PRD、Architecture、Story 等），但缺乏面向 OpenSpec 的精简输出格式
-- 不同 topic 的制品组织方式不统一
-- 需要建立 BMAD → OpenSpec 的标准化工作流
+本 `design.md` 为 **BMAD 概要设计**，供后续在业务仓库中执行 OpenSpec `/opsx:apply` 时参考。**不包含实现任务列表。**
 
 ## Goals / Non-Goals
 
 **Goals:**
 
-- 定义 Topic 文件夹规范：每个 epic 级需求对应一个 topic 文件夹，包含 `proposal.md` 和 `design.md`
-- 建立制品格式约定：`proposal.md` 描述需求提案，`design.md` 保持概要级别
-- 确保 Topic 文件夹可直接被 OpenSpec 导入消费
+- BMAD 负责：PRD、架构、Epic → 多 `proposal.md` 草稿、跨前后端/多仓库概要 design、`project-context.md`
+- 用户负责：将每个 slice 导入对应项目的 OpenSpec change
+- OpenSpec 负责：`specs`、`tasks.md`、`/opsx:apply`、`/opsx:archive`
+- Cursor：统一承载 `.agents/skills/`（BMAD）与 OpenSpec 命令
 
 **Non-Goals:**
 
-- 不重新定义 BMAD-METHOD 的规划流程
-- 不替代 OpenSpec 的 propose/apply 工作流，而是为其提供标准化输入
-- 不涉及具体的代码实现或执行引擎
+- BMAD 自动生成 OpenSpec change 或调用 `openspec` CLI
+- BMAD 输出 `tasks.md`、Story 任务列表、sprint-status 驱动开发
+- 用 BMAD Phase 4（`bmad-dev-story` 等）替代 `/opsx:apply`
 
 ## Decisions
 
-### Decision 1: Topic 文件夹结构
+### Decision 1: 手工衔接，无自动化管道
 
-```
-topic-name/
-├── proposal.md   ← Why / What Changes / Capabilities / Impact
-└── design.md     ← Context / Goals / Decisions（概要级别）
-```
+用户从 `planning/<epic>/slices/<name>/` 拷贝 `proposal.md`（及可选 `design.md`）到目标仓库，再执行 OpenSpec。理由：Epic 常跨多个 repo，自动化导入易错绑仓库。
 
-**文件夹命名**: kebab-case 格式，反映 topic 内容（如 `plan-methodology-research`）
+### Decision 2: tasks 独占 OpenSpec
 
-**理由**: 两个文件覆盖了 epic 级需求从提案到设计的核心信息，且直接映射到 OpenSpec 的 propose 和 apply 流程。
+| 制品 | BMAD | OpenSpec |
+|------|------|----------|
+| proposal 草稿 | ✅ | 正式版 |
+| 概要 design | ✅ | 可合并扩展 |
+| **tasks.md** | ❌ | ✅ |
 
-### Decision 2: proposal.md 格式
+### Decision 3: Cursor 安装 BMAD 至 `.agents/skills/`
 
-```
-## Why           — 为什么需要这个变更
-## What Changes  — 变更内容概述
-## Capabilities  — 新增和修改的能力清单
-## Impact        — 影响范围
-```
+使用 `npx bmad-method install --tools cursor`（见 `platform-codes.yaml`）。项目 `AGENTS.md` 中声明规划/执行阶段分工，减少 Agent 误用 `bmad-dev-story`。
 
-**理由**: 这是 OpenSpec `/opsx:propose` 的标准输入格式，聚焦于"为什么要做"和"做什么"。
+### Decision 4: 多项目 Epic 在架构阶段划界
 
-### Decision 3: design.md 保持概要级别
-
-`design.md` 描述 Context、Goals/Non-Goals、关键 Decisions，但**不需要非常细节**。具体实现细节由 OpenSpec apply 阶段展开。
-
-**理由**: 过度细节的 design.md 增加了 BMAD 阶段的成本，且后续 OpenSpec 流程会进一步细化，保持概要即可。
-
-### Decision 4: OpenSpec 导入方式
-
-直接将 topic 文件夹导入 OpenSpec，OpenSpec 自动识别 `proposal.md` 和 `design.md`，按序执行 propose → apply 流程。
-
-**理由**: 文件夹作为导入单元，结构清晰、操作简单，无需额外的格式转换或中间步骤。
+`bmad-create-architecture` 产出系统边界与 repo 映射；每个 slice 的 OpenSpec change 落在单一目标仓库。
 
 ## Risks / Trade-offs
 
-### design.md 概要 vs 细节的平衡
+**风险**: 用户跳过衔接，直接在 BMAD 对话里要求写代码。  
+**缓解**: 规则与 `bmad-help` 提示中强调「规划结束后使用 `/opsx:propose`」。
 
-**风险**: 过于概要的 design.md 可能导致 OpenSpec apply 阶段信息不足。
-
-**缓解**: design.md 应覆盖关键设计决策（Decisions），这些决策足以指导 apply 阶段的展开。具体的实施细节留给 apply 阶段。
-
-### Topic 命名冲突
-
-**风险**: 不同 epic 可能产生相同或相似的 topic 名称。
-
-**缓解**: 使用足够具体的 kebab-case 命名，必要时添加日期或项目前缀。
+**风险**: 概要 design 过薄导致 OpenSpec apply 信息不足。  
+**缓解**: design 至少包含 Decisions；细节由 OpenSpec 在 propose 链路中展开，**仍不**在 BMAD 中写 tasks。

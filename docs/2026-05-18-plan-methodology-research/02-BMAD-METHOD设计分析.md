@@ -101,7 +101,9 @@ bmad-create-architecture
 
 ### 2.5 Phase 4: Implementation（实施阶段）
 
-**目的**: 逐个 Story 构建项目。
+> **与 OpenSpec 结合时：跳过本阶段。** 任务清单与编码实现由 OpenSpec `tasks.md` + `/opsx:apply` 负责，不在 BMAD 中生成 Story 任务或 sprint 驱动开发。见 [03-Cursor-OpenSpec-BMAD 结合方案](./03-Cursor-OpenSpec-BMAD结合方案.md)。
+
+**目的**: 逐个 Story 构建项目（仅在使用 BMAD 全生命周期、**未**接入 OpenSpec 时采用）。
 
 | 工作流 | 描述 | 核心输出 |
 |--------|------|----------|
@@ -422,9 +424,22 @@ BMAD 证明了通过文件而非对话历史传递上下文可以：
 
 质量门控防止了"带病前进"——在没有充分规划的情况下仓促编码。
 
+## 10. 与 OpenSpec 协同时的职责裁剪
+
+采用 [Cursor + OpenSpec + BMAD 结合方案](./03-Cursor-OpenSpec-BMAD结合方案.md) 时，BMAD 只使用 **Phase 1–3** 的能力子集：
+
+| 保留 | 跳过 |
+|------|------|
+| Analysis / PRD / UX（按需） | Phase 4 全部实施工作流 |
+| Architecture、跨项目边界设计 | `bmad-dev-story`、`bmad-sprint-planning` |
+| Epic → 多个 **proposal 草稿**（非 Story tasks） | Story 卡片中的 Tasks 列表 |
+| `project-context.md` | `sprint-status.yaml` 驱动开发 |
+
+**Epic 拆分产出物**：每个可交付单元一份 `proposal.md` + 概要 `design.md`，由**用户**导入目标仓库的 OpenSpec change，不在 BMAD 内调用 `openspec` CLI。
+
 ---
 
 **参考来源**:
 - BMAD-METHOD 源码: `repos/bmad-method`
-- Agent 定义: `repos/bmad-method/src/bmm-skills/`
-- 工作流文件: `repos/bmad-method/src/bmm-skills/[1-4]-*/`
+- Cursor 安装: `tools/installer/ide/platform-codes.yaml`（`cursor` → `.agents/skills/`）
+- 结合方案: [03-Cursor-OpenSpec-BMAD结合方案](./03-Cursor-OpenSpec-BMAD结合方案.md)
